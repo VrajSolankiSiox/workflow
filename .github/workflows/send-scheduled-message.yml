@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Send Google Chat message
         env:
-          GCHAT_WEBHOOK_URL: ${{ secrets.GCHAT_WEBHOOK_URL }}
+          GCHAT_WEBHOOK_URL: https://chat.googleapis.com/v1/spaces/AAQA45f-Aoc/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=ondQWN9rd86LJTVuCVr8YInKBCA_QKaa_9m6Vz8ROIA
         run: |
           curl -X POST -H "Content-Type: application/json; charset=UTF-8" \
             -d '{"text":"Hello,\nCan you please check and update the load status"}' \
