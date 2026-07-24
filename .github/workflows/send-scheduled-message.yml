@@ -1,0 +1,27 @@
+name: Send Scheduled Message
+ 
+# NOTES (read before relying on this):
+# - GitHub Actions cron schedules run in UTC only. Convert your local time to UTC
+#   when setting the cron expression below.
+# - GitHub does not guarantee exact timing — jobs can be delayed a few minutes,
+#   especially at busy times like the top of the hour.
+# - If this repo has zero commits/activity for 60 days, GitHub auto-disables
+#   scheduled workflows until someone manually re-enables them (Actions tab).
+ 
+on:
+  schedule:
+    - cron: '30 19 * * *'   # 19:30 UTC / 7:30 PM GMT every day
+  workflow_dispatch:        # adds a "Run workflow" button for manual testing
+ 
+jobs:
+  send-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Google Chat message
+        env:
+          GCHAT_WEBHOOK_URL: ${{ secrets.GCHAT_WEBHOOK_URL }}
+        run: |
+          curl -X POST -H "Content-Type: application/json; charset=UTF-8" \
+            -d '{"text":"Hello,\nCan you please check and update the load status"}' \
+            "$GCHAT_WEBHOOK_URL"
+ 
