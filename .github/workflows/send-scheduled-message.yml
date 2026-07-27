@@ -1,18 +1,11 @@
 name: Send Scheduled Message
- 
-# NOTES (read before relying on this):
-# - GitHub Actions cron schedules run in UTC only. Convert your local time to UTC
-#   when setting the cron expression below.
-# - GitHub does not guarantee exact timing — jobs can be delayed a few minutes,
-#   especially at busy times like the top of the hour.
-# - If this repo has zero commits/activity for 60 days, GitHub auto-disables
-#   scheduled workflows until someone manually re-enables them (Actions tab).
- 
+
 on:
   schedule:
-    - cron: '0 21 * * *'       
-  workflow_dispatch:        # adds a "Run workflow" button for manual testing
- 
+    - cron: '0 0 * * *'    # 7:00 PM EST (2 hours before 9:00 PM EST)
+    - cron: '30 3 * * *'   # 10:30 PM EST (2 hours before 12:30 AM EST)
+  workflow_dispatch:
+
 jobs:
   send-message:
     runs-on: ubuntu-latest
@@ -24,4 +17,3 @@ jobs:
           curl -X POST -H "Content-Type: application/json; charset=UTF-8" \
             -d '{"text":"Hello,\nCan you please check and update the load status"}' \
             "$GCHAT_WEBHOOK_URL"
- 
